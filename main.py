@@ -1,34 +1,35 @@
 """アドレス・ベース・レジストリ マスタデータパイプライン。
 
-1. 各種マスタ CSV をダウンロード・展開
+1. data/ の zip ファイルを展開
 2. dbt ビルド
+
+データ更新手順:
+  ABR サイト (https://dataset.address-br.digital.go.jp/) から最新の zip をダウンロードし、
+  data/ に配置してコミットする。git 履歴でデータバージョンを追跡できる。
 """
 
 import logging
 import zipfile
-from io import BytesIO
 from pathlib import Path
-from urllib.request import Request, urlopen
 
 from dbt.cli.main import dbtRunner
 
 logger = logging.getLogger("pipelines")
 
-BASE_URL = "https://data.address-br.digital.go.jp"
 DATA_DIR = Path("data")
 
-MASTERS = [
-    ("mt_pref", "mt_pref_all"),
-    ("mt_pref_pos", "mt_pref_pos_all"),
-    ("mt_city", "mt_city_all"),
-    ("mt_city_pos", "mt_city_pos_all"),
-    ("mt_town", "mt_town_all"),
-    ("mt_town_fullset", "mt_town_fullset_all"),
+ZIPS = [
+    "mt_pref_all",
+    "mt_pref_pos_all",
+    "mt_city_all",
+    "mt_city_pos_all",
+    "mt_town_all",
+    "mt_town_fullset_all",
 ]
 
 
 def main():
-    _download_all()
+    _extract_all()
 
     dbt = dbtRunner()
 
@@ -45,32 +46,27 @@ def main():
         raise SystemExit("dbt docs generate failed")
 
 
-def _download_all() -> None:
-    """全マスタ CSV をダウンロードして展開する。"""
-    DATA_DIR.mkdir(exist_ok=True)
-
-    for name, filename in MASTERS:
-        _download(name, filename)
+def _extract_all() -> None:
+    """data/ 内の zip ファイルを CSV に展開する。"""
+    for filename in ZIPS:
+        _extract(filename)
 
 
-def _download(name: str, filename: str) -> None:
-    """単一マスタ CSV をダウンロードして展開する。既存ならスキップ。"""
+def _extract(filename: str) -> None:
+    """zip を展開する。CSV が既に存在すればスキップ。"""
     csv_path = DATA_DIR / f"{filename}.csv"
+    zip_path = DATA_DIR / f"{filename}.csv.zip"
+
     if csv_path.exists():
         logger.info(f"  skip (already exists: {csv_path})")
         return
 
-    url = f"{BASE_URL}/{name}/{filename}.csv.zip"
-    logger.info(f"  downloading {filename}.csv.zip...")
-    req = Request(url, headers={"User-Agent": "dataset-address-br"})
-    with urlopen(req) as resp:
-        data = resp.read()
+    if not zip_path.exists():
+        raise FileNotFoundError(f"{zip_path} not found. Download from ABR site.")
 
-    with zipfile.ZipFile(BytesIO(data)) as zf:
+    logger.info(f"  extracting {zip_path.name}...")
+    with zipfile.ZipFile(zip_path) as zf:
         zf.extract(f"{filename}.csv", DATA_DIR)
-
-    lines = csv_path.read_text(encoding="utf-8").strip().splitlines()
-    print(f"  {filename}.csv: {len(lines) - 1} records downloaded")
 
 
 if __name__ == "__main__":
