@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  - name: mart_city
+    description: |
+      全国の市区町村マスタ。
+      「アドレス・ベース・レジストリ（市区町村マスタデータ）」（デジタル庁）（https://dataset.address-br.digital.go.jp/）を加工して作成。
+      政令指定都市は市レベルと区レベルの両方のレコードを含む。
+    access: public
+    config:
+      meta:
+        title: "市区町村マスタ"
+        source_url: "https://dataset.address-br.digital.go.jp/documents/5e130d8117c6426fa1f53a5dbf90cb74/about"
+        published: true
+        tags: ["マスタ", "市区町村", "地方公共団体コード"]
+    columns:
+      - name: lg_code
+        data_type: varchar
+        meta:
+          title: 全国地方公共団体コード
+          description: 6桁（検査数字あり）
+      - name: lg_code_5
+        data_type: varchar
+        meta:
+          title: 全国地方公共団体コード（5桁）
+          description: 検査数字なし。N03 等の5桁コードと結合用
+      - name: pref_code
+        data_type: varchar
+        meta:
+          title: 都道府県コード
+          description: 2桁
+      - name: pref_name
+        data_type: varchar
+        meta:
+          title: 都道府県名
+      - name: pref_name_kana
+        data_type: varchar
+        meta:
+          title: 都道府県名（カナ）
+      - name: county_name
+        data_type: varchar
+        meta:
+          title: 郡名
+      - name: city_name
+        data_type: varchar
+        meta:
+          title: 市区町村名
+      - name: city_name_kana
+        data_type: varchar
+        meta:
+          title: 市区町村名（カナ）
+      - name: ward_name
+        data_type: varchar
+        meta:
+          title: 行政区名
+          description: 政令指定都市のみ（他は NULL）
+      - name: ward_name_kana
+        data_type: varchar
+        meta:
+          title: 行政区名（カナ）
+      - name: is_designated_city_ward
+        data_type: boolean
+        meta:
+          title: 政令指定都市の区フラグ
+      - name: geometry
+        data_type: geometry
+        meta:
+          title: 代表点
+          description: 位置参照拡張の代表点座標
+      - name: efct_date
+        data_type: date
+        meta:
+          title: 効力発生日

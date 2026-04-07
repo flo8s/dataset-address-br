@@ -1,0 +1,150 @@
+version: 2
+
+models:
+  - name: mart_town
+    description: |
+      全国の町字マスタ。
+      「アドレス・ベース・レジストリ（町字マスタデータ）」（デジタル庁）（https://dataset.address-br.digital.go.jp/）を加工して作成。
+    access: public
+    config:
+      meta:
+        title: "町字マスタ"
+        source_url: "https://dataset.address-br.digital.go.jp/documents/b80e77a0e2d24e5692be4af885eb3de7/about"
+        published: true
+        tags: ["マスタ", "町字", "住所"]
+    columns:
+      - name: lg_code
+        data_type: varchar
+        meta:
+          title: 全国地方公共団体コード
+          description: 6桁（検査数字あり）
+      - name: machiaza_id
+        data_type: varchar
+        meta:
+          title: 町字ID
+      - name: machiaza_type
+        data_type: varchar
+        meta:
+          title: 町字区分コード
+      - name: pref_code
+        data_type: varchar
+        meta:
+          title: 都道府県コード
+          description: 2桁
+      - name: pref_name
+        data_type: varchar
+        meta:
+          title: 都道府県名
+      - name: pref_name_kana
+        data_type: varchar
+        meta:
+          title: 都道府県名（カナ）
+      - name: county_name
+        data_type: varchar
+        meta:
+          title: 郡名
+      - name: city_name
+        data_type: varchar
+        meta:
+          title: 市区町村名
+      - name: city_name_kana
+        data_type: varchar
+        meta:
+          title: 市区町村名（カナ）
+      - name: ward_name
+        data_type: varchar
+        meta:
+          title: 行政区名
+          description: 政令指定都市のみ（他は NULL）
+      - name: ward_name_kana
+        data_type: varchar
+        meta:
+          title: 行政区名（カナ）
+      - name: oaza_cho
+        data_type: varchar
+        meta:
+          title: 大字・町名
+      - name: oaza_cho_kana
+        data_type: varchar
+        meta:
+          title: 大字・町名（カナ）
+      - name: chome
+        data_type: varchar
+        meta:
+          title: 丁目名
+      - name: chome_number
+        data_type: varchar
+        meta:
+          title: 丁目番号
+      - name: koaza
+        data_type: varchar
+        meta:
+          title: 小字名
+      - name: koaza_kana
+        data_type: varchar
+        meta:
+          title: 小字名（カナ）
+      - name: post_code
+        data_type: varchar
+        meta:
+          title: 郵便番号
+      - name: efct_date
+        data_type: date
+        meta:
+          title: 効力発生日
+      - name: oaza_cho_uncmn_reg
+        data_type: varchar
+        meta:
+          title: 大字・町外字 正規化
+      - name: oaza_cho_uncmn_mj
+        data_type: varchar
+        meta:
+          title: 大字・町外字 明治
+      - name: oaza_cho_uncmn_type
+        data_type: varchar
+        meta:
+          title: 大字・町外字 種別
+      - name: oaza_cho_uncmn_code
+        data_type: varchar
+        meta:
+          title: 大字・町外字 コード
+      - name: koaza_uncmn_reg
+        data_type: varchar
+        meta:
+          title: 小字外字 正規化
+      - name: koaza_uncmn_mj
+        data_type: varchar
+        meta:
+          title: 小字外字 明治
+      - name: koaza_uncmn_type
+        data_type: varchar
+        meta:
+          title: 小字外字 種別
+      - name: koaza_uncmn_code
+        data_type: varchar
+        meta:
+          title: 小字外字 コード
+      - name: alias_oaza
+        data_type: varchar
+        meta:
+          title: 大字・町通称名
+      - name: alias_oaza_kana
+        data_type: varchar
+        meta:
+          title: 大字・町通称名（カナ）
+      - name: alias_oaza_roma
+        data_type: varchar
+        meta:
+          title: 大字・町通称名（ローマ字）
+      - name: alias_koaza
+        data_type: varchar
+        meta:
+          title: 小字通称名
+      - name: alias_koaza_kana
+        data_type: varchar
+        meta:
+          title: 小字通称名（カナ）
+      - name: alias_koaza_roma
+        data_type: varchar
+        meta:
+          title: 小字通称名（ローマ字）

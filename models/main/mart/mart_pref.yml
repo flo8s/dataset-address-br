@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: mart_pref
+    description: |
+      全国の都道府県マスタ。
+      「アドレス・ベース・レジストリ（都道府県マスタデータ）」（デジタル庁）（https://dataset.address-br.digital.go.jp/）を加工して作成。
+      位置参照拡張の代表点座標を geometry に変換。
+    access: public
+    config:
+      meta:
+        title: "都道府県マスタ"
+        source_url: "https://dataset.address-br.digital.go.jp/documents/45bcb60e4dc747b58def5493ab829825/about"
+        published: true
+        tags: ["マスタ", "都道府県", "地方公共団体コード"]
+    columns:
+      - name: lg_code
+        data_type: varchar
+        meta:
+          title: 全国地方公共団体コード
+          description: 6桁（検査数字あり）
+      - name: pref_code
+        data_type: varchar
+        meta:
+          title: 都道府県コード
+          description: 2桁
+      - name: pref_name
+        data_type: varchar
+        meta:
+          title: 都道府県名
+      - name: pref_name_kana
+        data_type: varchar
+        meta:
+          title: 都道府県名（カナ）
+      - name: geometry
+        data_type: geometry
+        meta:
+          title: 代表点
+          description: 位置参照拡張の代表点座標
+      - name: efct_date
+        data_type: date
+        meta:
+          title: 効力発生日
