@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: raw_mt_pref
+    description: 都道府県マスタ
+    config:
+      meta:
+        source_url: "https://dataset.address-br.digital.go.jp/documents/45bcb60e4dc747b58def5493ab829825/about"
+
+  - name: raw_mt_pref_pos
+    description: 都道府県マスタ位置参照拡張
+    config:
+      meta:
+        source_url: "https://dataset.address-br.digital.go.jp/documents/535e5c01f4af4f5bba72618472f07db9/about"
+
+  - name: raw_mt_city
+    description: 市区町村マスタ
+    config:
+      meta:
+        source_url: "https://dataset.address-br.digital.go.jp/documents/5e130d8117c6426fa1f53a5dbf90cb74/about"
+
+  - name: raw_mt_city_pos
+    description: 市区町村マスタ位置参照拡張
+    config:
+      meta:
+        source_url: "https://dataset.address-br.digital.go.jp/documents/7108b74d9fad4e79997538ec40aa8015/about"
+
+  - name: raw_mt_town
+    description: 町字マスタ
+    config:
+      meta:
+        source_url: "https://dataset.address-br.digital.go.jp/documents/b80e77a0e2d24e5692be4af885eb3de7/about"
+
+  - name: raw_mt_town_fullset
+    description: 町字マスタ（フルセット）
+    config:
+      meta:
+        source_url: "https://dataset.address-br.digital.go.jp/documents/061100c569ac4ba49cd4a6cda21b5a8d/about"
