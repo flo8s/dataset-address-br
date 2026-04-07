@@ -1,0 +1,30 @@
+name = "address_br"
+catalog = "sqlite"
+command = "python main.py"
+
+[targets.default]
+url = "s3://${FDL_S3_BUCKET}"
+public_url = "https://data.queria.io"
+s3_endpoint = "${FDL_S3_ENDPOINT}"
+s3_access_key_id = "${FDL_S3_ACCESS_KEY_ID}"
+s3_secret_access_key = "${FDL_S3_SECRET_ACCESS_KEY}"
+
+[targets.local]
+url = "~/.local/share/fdl"
+public_url = "http://localhost:4001"
+
+[meta]
+license = "デジタル庁利用規約"
+license_url = "https://www.digital.go.jp/policies/base_registry_address_tos"
+title = "アドレス・ベース・レジストリ"
+description = """「アドレス・ベース・レジストリ（市区町村マスタデータ）」（デジタル庁）\
+（https://dataset.address-br.digital.go.jp/）を加工して作成。
+全国地方公共団体コード・都道府県・郡・市区町村・行政区の対応表を提供。"""
+cover = "🏛️"
+tags = ['住所', 'マスタ', '地方公共団体コード', 'デジタル庁']
+source_url = "https://dataset.address-br.digital.go.jp/"
+repository_url = "https://github.com/flo8s/dataset-address-br"
+schedule = "monthly"
+
+[meta.schemas]
+main.title = "メイン"
