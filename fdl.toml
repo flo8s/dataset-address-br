@@ -1,5 +1,4 @@
 name = "address_br"
-catalog = "sqlite"
 command = "python main.py"
 
 [targets.default]
