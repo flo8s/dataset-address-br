@@ -1,14 +1,16 @@
 """アドレス・ベース・レジストリ マスタデータパイプライン。
 
 1. data/ の zip ファイルを展開
-2. dbt ビルド
-
-データ更新手順:
-  ABR サイト (https://dataset.address-br.digital.go.jp/) から最新の zip をダウンロードし、
-  data/ に配置してコミットする。git 履歴でデータバージョンを追跡できる。
+2. dbt build
+3. snapshot MotherDuck catalog to R2 (same Python process)
 """
 
+from __future__ import annotations
+
+import importlib.util
 import logging
+import os
+import sys
 import zipfile
 from pathlib import Path
 
@@ -27,33 +29,39 @@ ZIPS = [
     "mt_town_fullset_all",
 ]
 
+SHARED_SCRIPTS = Path(__file__).resolve().parent / "shared" / "scripts"
+_spec = importlib.util.spec_from_file_location(
+    "snapshot_to_r2", SHARED_SCRIPTS / "snapshot-to-r2.py"
+)
+assert _spec and _spec.loader
+snapshot_to_r2 = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(snapshot_to_r2)
 
-def main():
+
+def main() -> None:
+    target = os.environ.get("DBT_TARGET", sys.argv[1] if len(sys.argv) > 1 else "default")
+
     _extract_all()
 
     dbt = dbtRunner()
+    for cmd in (
+        ["deps"],
+        ["build", "--target", target],
+        ["docs", "generate", "--target", target],
+    ):
+        result = dbt.invoke(cmd)
+        if not result.success:
+            raise SystemExit(f"dbt {' '.join(cmd)} failed")
 
-    result = dbt.invoke(["deps"])
-    if not result.success:
-        raise SystemExit("dbt deps failed")
-
-    result = dbt.invoke(["run"])
-    if not result.success:
-        raise SystemExit("dbt run failed")
-
-    result = dbt.invoke(["docs", "generate"])
-    if not result.success:
-        raise SystemExit("dbt docs generate failed")
+    snapshot_to_r2.run(target)
 
 
 def _extract_all() -> None:
-    """data/ 内の zip ファイルを CSV に展開する。"""
     for filename in ZIPS:
         _extract(filename)
 
 
 def _extract(filename: str) -> None:
-    """zip を展開する。CSV が既に存在すればスキップ。"""
     csv_path = DATA_DIR / f"{filename}.csv"
     zip_path = DATA_DIR / f"{filename}.csv.zip"
 
