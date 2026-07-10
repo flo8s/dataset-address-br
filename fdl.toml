@@ -22,7 +22,7 @@ description = """「アドレス・ベース・レジストリ（市区町村マ
 cover = "🏛️"
 tags = ['住所', 'マスタ', '地方公共団体コード', 'デジタル庁']
 source_url = "https://dataset.address-br.digital.go.jp/"
-repository_url = "https://github.com/flo8s/dataset-address-br"
+repository_url = "https://github.com/queria-io/dataset-address-br"
 schedule = "monthly"
 
 [meta.schemas]
