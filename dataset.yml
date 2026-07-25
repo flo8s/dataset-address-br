@@ -1,0 +1,51 @@
+spec_version: "0.1"
+name: address_br
+title: アドレス・ベース・レジストリ
+description: |-
+  「アドレス・ベース・レジストリ（市区町村マスタデータ）」（デジタル庁）（https://dataset.address-br.digital.go.jp/）を加工して作成。
+  全国地方公共団体コード・都道府県・郡・市区町村・行政区の対応表を提供。
+keywords:
+  - 住所
+  - マスタ
+  - 地方公共団体コード
+  - デジタル庁
+homepage: https://github.com/queria-io/dataset-address-br
+language: ja
+
+licenses:
+  - JP-DIGITAL-ADDRESS-BR
+
+sources:
+  - title: アドレス・ベース・レジストリ（デジタル庁）
+    path: https://dataset.address-br.digital.go.jp/
+
+contributors:
+  - title: デジタル庁
+    path: https://www.digital.go.jp/
+    roles: [rightsHolder]
+
+spatial_coverage: [JP]
+update_frequency: monthly
+cover: 🏛️
+
+ai_context:
+  instructions: |
+    住所を都道府県・市区町村・町字に分けて正規化する、住所文字列から地域コードを引く、
+    町字単位で他のデータを集計する、といった住所の名寄せに使う。
+    3階層のマスタがある。都道府県47件、市区町村1918件、町字72万7396件。
+    市区町村マスタは政令指定都市について市レベルと区レベルの両方の行を持つ。
+    そのため単純に数えると市区町村の数（lg_code の1747）とは一致しない。
+    政令指定都市の区のコードを持つのはこちらで、lg_code には区が入っていない。
+    lg_code は6桁（チェックディジット付き）なので lg_code / zipcode / houjin_bangou と結合できる。
+    都道府県・市区町村は位置参照拡張の代表点座標を geometry に持つ。面ではなく点。
+    町字は表記の揺れ（丁目の有無、大字・字の扱い）が住所文字列との突合の難所になる。
+    時点のスナップショットで、廃置分合の履歴は持たない。
+  synonyms: [アドレス・ベース・レジストリ, ABR, 住所マスタ, 町字マスタ]
+  examples:
+    - 政令指定都市の区のコードを引きたい
+    - 市区町村ごとの町字の数を出したい
+    - 住所文字列を都道府県・市区町村・町字に分けたい
+
+schemas:
+  - name: main
+    title: メイン

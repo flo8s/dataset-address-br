@@ -1,0 +1,83 @@
+schema: main
+name: mart_town
+title: 町字マスタ
+description: '全国の町字マスタ。
+
+  「アドレス・ベース・レジストリ（町字マスタデータ）」（デジタル庁）（https://dataset.address-br.digital.go.jp/）を加工して作成。'
+keywords:
+  - マスタ
+  - 町字
+  - 住所
+published: true
+sources:
+  - path: https://dataset.address-br.digital.go.jp/documents/b80e77a0e2d24e5692be4af885eb3de7/about
+fields:
+  - name: lg_code
+    title: 全国地方公共団体コード
+    description: 6桁（検査数字あり）
+  - name: machiaza_id
+    title: 町字ID
+  - name: machiaza_type
+    title: 町字区分コード
+  - name: pref_code
+    title: 都道府県コード
+    description: 2桁
+  - name: pref_name
+    title: 都道府県名
+  - name: pref_name_kana
+    title: 都道府県名（カナ）
+  - name: county_name
+    title: 郡名
+  - name: city_name
+    title: 市区町村名
+  - name: city_name_kana
+    title: 市区町村名（カナ）
+  - name: ward_name
+    title: 行政区名
+    description: 政令指定都市のみ（他は NULL）
+  - name: ward_name_kana
+    title: 行政区名（カナ）
+  - name: oaza_cho
+    title: 大字・町名
+  - name: oaza_cho_kana
+    title: 大字・町名（カナ）
+  - name: chome
+    title: 丁目名
+  - name: chome_number
+    title: 丁目番号
+  - name: koaza
+    title: 小字名
+  - name: koaza_kana
+    title: 小字名（カナ）
+  - name: post_code
+    title: 郵便番号
+  - name: efct_date
+    title: 効力発生日
+  - name: oaza_cho_uncmn_reg
+    title: 大字・町外字 正規化
+  - name: oaza_cho_uncmn_mj
+    title: 大字・町外字 明治
+  - name: oaza_cho_uncmn_type
+    title: 大字・町外字 種別
+  - name: oaza_cho_uncmn_code
+    title: 大字・町外字 コード
+  - name: koaza_uncmn_reg
+    title: 小字外字 正規化
+  - name: koaza_uncmn_mj
+    title: 小字外字 明治
+  - name: koaza_uncmn_type
+    title: 小字外字 種別
+  - name: koaza_uncmn_code
+    title: 小字外字 コード
+  - name: alias_oaza
+    title: 大字・町通称名
+  - name: alias_oaza_kana
+    title: 大字・町通称名（カナ）
+  - name: alias_oaza_roma
+    title: 大字・町通称名（ローマ字）
+  - name: alias_koaza
+    title: 小字通称名
+  - name: alias_koaza_kana
+    title: 小字通称名（カナ）
+  - name: alias_koaza_roma
+    title: 小字通称名（ローマ字）
