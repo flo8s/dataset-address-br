@@ -1,0 +1,31 @@
+schema: main
+name: mart_pref
+title: 都道府県マスタ
+description: '全国の都道府県マスタ。
+
+  「アドレス・ベース・レジストリ（都道府県マスタデータ）」（デジタル庁）（https://dataset.address-br.digital.go.jp/）を加工して作成。
+
+  位置参照拡張の代表点座標を geometry に変換。'
+keywords:
+  - マスタ
+  - 都道府県
+  - 地方公共団体コード
+published: true
+sources:
+  - path: https://dataset.address-br.digital.go.jp/documents/45bcb60e4dc747b58def5493ab829825/about
+fields:
+  - name: lg_code
+    title: 全国地方公共団体コード
+    description: 6桁（検査数字あり）
+  - name: pref_code
+    title: 都道府県コード
+    description: 2桁
+  - name: pref_name
+    title: 都道府県名
+  - name: pref_name_kana
+    title: 都道府県名（カナ）
+  - name: geometry
+    title: 代表点
+    description: '位置参照拡張の代表点座標 (CRS: EPSG:6668 / JGD2011)'
+  - name: efct_date
+    title: 効力発生日

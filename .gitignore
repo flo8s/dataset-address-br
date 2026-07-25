@@ -19,3 +19,4 @@ data/*.csv
 
 # Environment
 .env
+dist/
